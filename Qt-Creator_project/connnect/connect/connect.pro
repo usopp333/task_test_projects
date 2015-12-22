@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-12-21T16:06:46
+# Project created by QtCreator 2015-12-22T14:53:20
 #
 #-------------------------------------------------
 
@@ -8,13 +8,14 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Qt2-3
+TARGET = connect
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES += main.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += \
+    newspaper.h \
+    reader.h
 
 FORMS    += mainwindow.ui
