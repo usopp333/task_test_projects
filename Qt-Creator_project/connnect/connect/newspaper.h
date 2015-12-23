@@ -10,10 +10,12 @@ public:
     }
     void send()
     {
-        emit newPaper(m_name);  //emit Qt 对C++的扩展（关键字，也是宏），含义“发出”，发出newPaper()信号
+        //emit Qt 对C++的扩展（关键字，也是宏），含义“发出”，发出newPaper()信号
+        emit newPaper(m_name);
     }
 signals:
     void newPaper(const QString &name);
+	void newPaper(const QString &name,const QDate &date);
 private:
     QString m_name;
 
