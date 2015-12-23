@@ -10,8 +10,11 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 private:
-    void open();
+    void openFile();
+	void saveFile();
     QAction *openAction;
+	QAction *saveAction;
+	QTextEdit *textEdit;
 };
 
 #endif

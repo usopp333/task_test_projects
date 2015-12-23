@@ -4,6 +4,7 @@
 #include <QStatusBar>
 #include <QToolBar>
 #include <QDebug>
+#include <QTextEdit>
 
 #include "mainwindow.h"
 
@@ -12,19 +13,27 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setWindowTitle(tr("Main Window"));
 
-    openAction = new QAction(QIcon(":/images/doc-open"),tr("&Open. . ."),this);
+    openAction = new QAction(QIcon(":/images/doc-open"),tr("&Open..."),this);
     openAction ->setShortcuts(QKeySequence::Open);
     openAction ->setStatusTip(tr("Open an existing file"));
-    connect(openAction,&QAction::triggered, this, &MainWindow::open);
+	
+	saveAction = new QAction(QIcon(":/image/file-save"), tr("&Save..."), this);
+	saveAction ->setShortcuts(QKeySequence::Save);
+	saveAction ->setStatusTip(tr("Save a new file"));
 
-    QMenu *file = menuBar()->addMenu(tr("&File"));
-    file ->addAction(openAction);
+	QMenu *file = menuBar()->addMenu(tr("&File"));
+	file ->addAction(openAction);
+	file ->addAction(saveAction);
 
-    QToolBar *toolBar = addToolBar(tr("&File"));
-    toolBar ->addAction(openAction);
+	QToolBar *toolBar = addToolBar(tr("&File"));
+	toolBar ->addAction(openAction);
+	toolBar ->addAction(saveAction);
 
-    QToolBar *toolBar2 = addToolBar(tr("&Tool Bar 2"));
-    toolBar2 ->addAction(openAction);
+	textEdit = new QTextEdit(this);
+	setCentralWidget(textEdit);
+
+    connect(openAction,&QAction::triggered, this, &MainWindow::openFile);
+	connect(openAction,&QAction::triggered, this, &MainWindow::saveFile);
 
     statusBar();
 
@@ -34,7 +43,7 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::open()
+void MainWindow::openFile()
 {
     //QMessageBox::information(this, tr("Information"), tr("Open"));
     QDialog dialog(this);
@@ -52,7 +61,7 @@ void MainWindow::open()
         qDebug()<< tr("flase");
     }
 
-
+	//自带的QMessageBox
 //    if (QMessageBox::Yes == QMessageBox::question(this,
 //                                                  tr("Question"),
 //                                                  tr("Are you OK"),
@@ -62,25 +71,26 @@ void MainWindow::open()
 //    } else{
 //        QMessageBox::information(this, tr("Hmmm....."), tr("I'm sorry!"));
 //    }
-    QMessageBox msgBox;
-    msgBox.setText(tr("The document has been modifide."));
-    msgBox.setInformativeText(tr("Do you want to save your changes?"));
-    msgBox.setDetailedText(tr("Differencrs here...."));
-    msgBox.setStandardButtons(QMessageBox::Save
-                              | QMessageBox::Discard
-                              | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::Save);
-    int ret = msgBox.exec();
-    switch (ret){
-    case QMessageBox::Save:
-        qDebug() <<"Save document!";
-        break;
-    case QMessageBox::Discard:
-        qDebug() <<"Discard changes!";
-        break;
-    case QMessageBox::Cancel:
-        qDebug() <<"Close document!";
-        break;
-    }
+	//自定义一个QMessageBox
+//     QMessageBox msgBox;
+//     msgBox.setText(tr("The document has been modifide."));
+//     msgBox.setInformativeText(tr("Do you want to save your changes?"));
+//     msgBox.setDetailedText(tr("Differencrs here...."));
+//     msgBox.setStandardButtons(QMessageBox::Save
+//                               | QMessageBox::Discard
+//                               | QMessageBox::Cancel);
+//     msgBox.setDefaultButton(QMessageBox::Save);
+//     int ret = msgBox.exec();
+//     switch (ret){
+//     case QMessageBox::Save:
+//         qDebug() <<"Save document!";
+//         break;
+//     case QMessageBox::Discard:
+//         qDebug() <<"Discard changes!";
+//         break;
+//     case QMessageBox::Cancel:
+//         qDebug() <<"Close document!";
+//         break;
+//     }
 
 }
