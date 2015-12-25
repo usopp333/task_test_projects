@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+class QTextEdit;
 
 class MainWindow  :  public QMainWindow
 {
@@ -9,9 +10,10 @@ class MainWindow  :  public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-private:
+private slots:
     void openFile();
 	void saveFile();
+private:
     QAction *openAction;
 	QAction *saveAction;
 	QTextEdit *textEdit;
