@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
 
 class QTextEdit;
 
@@ -22,6 +23,8 @@ private:
 	QAction *saveAction;
 
 	QTextEdit *textEdit;
+protected:
+	void MainWindow::closeEvent(QCloseEvent *event);
 };
 
 #endif // MAINWINDOW_H

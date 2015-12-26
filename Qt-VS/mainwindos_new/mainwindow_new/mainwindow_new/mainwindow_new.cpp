@@ -25,10 +25,38 @@ QMainWindow(parent)
 
 	textEdit = new QTextEdit(this);
 	setCentralWidget(textEdit);
+	//setWindowTitle()函数可以使用 [*] 这种语法来表明，
+	// 在窗口内容发生改变时（通过setWindowModified(true)函数通知），
+	// Qt 会自动在标题上面的 [*] 位置替换成 * 号
+	connect(textEdit, &QTextEdit::textChanged, [=](){
+		this->setWindowModified(true);
+	});
+
+	setWindowTitle("TextPad[*]");
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+//	首先判断是不是有过修改，如果有，则弹出询问框，问一下是否要退出。
+//	如果用户点击了“Yes”，则接受关闭事件，这个事件所在的操作就是关闭窗口
+void MainWindow :: closeEvent(QCloseEvent *event)
+{
+	if(isWindowModified()){
+		bool exit = QMessageBox::question(this,
+										tr("Quit"),
+										tr("Are you sure to quit this qpplication?"),
+										QMessageBox::Yes | QMessageBox::No,
+										QMessageBox::No ) == QMessageBox::Yes ;
+		if(exit){
+			event->accept();
+		} else{
+			event->ignore();
+		}
+	} else{
+		event->accept();
+	}
 }
 
 void MainWindow::openFile()
